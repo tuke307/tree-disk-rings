@@ -31,6 +31,10 @@ class Drawing:
         Returns:
             np.ndarray: The image with the drawn circle.
         """
+        # Ensure the image has the correct data type
+        if image.dtype != np.uint8:
+            image = image.astype(np.uint8)
+
         image = cv2.circle(image, center_coordinates, radius, color, thickness)
 
         return image
