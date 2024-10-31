@@ -19,7 +19,7 @@
                 "--output_dir",
                 "./output",
                 "--root",
-                "./",
+                "/Users/tonymeissner/source/tree-ring-analyzer/",
                 "--sigma",
                 "3",
                 "--nr",
