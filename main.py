@@ -107,7 +107,7 @@ def tree_ring_detection(
         cy,
         cx,
         im_in,
-        debug_image_input_path,
+        f"../{debug_image_input_path}",
         debug_execution_time,
     )
 
