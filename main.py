@@ -5,8 +5,8 @@ from typing import Any, List, Optional, Tuple, Dict
 import logging
 import numpy as np
 
-from src.models.curve import Curve
-from src.models.chain import Chain
+from src.geometry.curve import Curve
+from src.geometry.chain import Chain
 from src.utils.file_utils import load_image, clear_dir
 from src.processing.preprocessing import preprocessing
 from src.detection.canny_devernay_edge_detector import canny_deverney_edge_detector

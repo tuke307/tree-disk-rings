@@ -1,12 +1,12 @@
 from shapely.geometry import Point, LineString
 from typing import List, Optional, Tuple
 
-from src.models.ring import Ring
-from src.models.chain import Chain
+from src.geometry.ring import Ring
+from src.geometry.chain import Chain
 from src.analysis.connect_chains import visualize_selected_ch_and_chains_over_image_
 
 
-class DiskContext:
+class ChainContext:
     def __init__(
         self,
         l_ch_c: List[Chain],
@@ -16,7 +16,7 @@ class DiskContext:
         debug: bool = True,
     ):
         """
-        Initialize the DiskContext object.
+        Initialize the ChainContext object.
 
         Args:
             l_ch_c (List[Chain]): List of chains

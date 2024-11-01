@@ -3,11 +3,11 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.utils.info_virtual_band import InfoVirtualBand
-from src.utils.neighbourhood import Neighbourhood
-from src.models.node import Node
-from src.models.chain import Chain, EndPoints
-from src.models.chain import (
+from src.geometry.virtual_band_generator import VirtualBandGenerator
+from src.analysis.chain_neighbourhood import ChainNeighbourhood
+from src.geometry.node import Node
+from src.geometry.chain import Chain, EndPoints
+from src.geometry.geometry_utils import (
     get_node_from_list_by_angle,
     visualize_selected_ch_and_chains_over_image_,
 )
@@ -352,7 +352,7 @@ def similarity_conditions(
     Returns:
         Tuple[bool, float]: (Similarity condition result, distance between radial distributions).
     """
-    neighbourhood = Neighbourhood(ch_j, candidate_chain, ch_i, endpoint)
+    neighbourhood = ChainNeighbourhood(ch_j, candidate_chain, ch_i, endpoint)
 
     if state is not None and getattr(state, "debug", False):
         visualize_selected_ch_and_chains_over_image_(
@@ -419,7 +419,7 @@ def similarity_conditions(
 
 
 def exist_chain_in_band_logic(
-    chain_list: List[Chain], band_info: InfoVirtualBand
+    chain_list: List[Chain], band_info: VirtualBandGenerator
 ) -> List[Chain]:
     """
     Checks for chains within the band.
@@ -471,7 +471,7 @@ def exist_chain_overlapping(
     Returns:
         bool: True if a chain exists in the band, False otherwise.
     """
-    info_band = InfoVirtualBand(l_nodes, ch_j, ch_k, endpoint_type, ch_i)
+    info_band = VirtualBandGenerator(l_nodes, ch_j, ch_k, endpoint_type, ch_i)
     l_chains_in_band = exist_chain_in_band_logic(l_ch_s, info_band)
     exist_chain = len(l_chains_in_band) > 0
 

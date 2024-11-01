@@ -1,4 +1,4 @@
-from src.models.chain import Chain
+from src.geometry.chain import Chain
 
 
 class Set:

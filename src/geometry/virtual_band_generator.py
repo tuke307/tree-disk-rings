@@ -2,16 +2,16 @@ from typing import List, Optional
 import numpy as np
 import cv2
 
-from src.models.node import Node
-from src.models.chain import Chain, EndPoints, TypeChains
-from src.models.operations import euclidean_distance_between_nodes
-from src.utils.drawing import Color, Drawing
+from src.geometry.node import Node
+from src.geometry.chain import Chain, EndPoints, TypeChains
+from src.geometry.geometry_utils import euclidean_distance_between_nodes
+from src.visualization.drawing import Color, Drawing
 from src.analysis.interpolation_nodes import (
     generate_nodes_list_between_two_radial_distances,
 )
 
 
-class InfoVirtualBand:
+class VirtualBandGenerator:
     """
     Class for generating a virtual band between two chains.
 
@@ -36,7 +36,7 @@ class InfoVirtualBand:
         domain: Optional[List[float]] = None,
     ):
         """
-        Initializes an InfoVirtualBand instance.
+        Initializes an VirtualBandGenerator instance.
 
         Args:
             l_nodes (List[Node]): List of interpolated nodes between the two chains plus the two endpoints.
@@ -172,11 +172,11 @@ class InfoVirtualBand:
         highest = [n for n in outer_band if n.angle == node.angle][0]
 
         if node.radial_distance <= lowest.radial_distance:
-            relative_position = InfoVirtualBand.DOWN
+            relative_position = VirtualBandGenerator.DOWN
         elif highest.radial_distance >= node.radial_distance >= lowest.radial_distance:
-            relative_position = InfoVirtualBand.INSIDE
+            relative_position = VirtualBandGenerator.INSIDE
         else:
-            relative_position = InfoVirtualBand.UP
+            relative_position = VirtualBandGenerator.UP
 
         return relative_position
 
@@ -197,7 +197,7 @@ class InfoVirtualBand:
 
         for node in node_chain_in_interval:
             res = self.is_dot_in_band(node)
-            if res == InfoVirtualBand.INSIDE:
+            if res == VirtualBandGenerator.INSIDE:
                 return True
             if prev_status is not None and prev_status != res:
                 return True

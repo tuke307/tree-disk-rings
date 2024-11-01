@@ -3,11 +3,11 @@ import cv2
 from shapely.geometry import Point, Polygon
 from typing import List, Optional, Tuple
 
-from src.models.chain import Chain
+from src.geometry.chain import Chain
 from src.analysis.chains_bag import ChainsBag
-from src.utils.disk_context import DiskContext
-from src.utils.system_status import SystemStatus
-from src.utils.virtual_band_info import similarity_conditions
+from src.processing.chain_context import ChainContext
+from src.analysis.chain_system_manager import ChainSystemManager
+from src.analysis.chain_analysis_tools import similarity_conditions
 from src.analysis.interpolation_nodes import (
     complete_chain_using_2_support_ring,
     connect_2_chain_via_inward_and_outward_ring,
@@ -17,8 +17,8 @@ from src.analysis.connect_chains import (
     intersection_between_chains,
     get_inward_and_outward_visible_chains,
 )
-from src.models.chain import Node, EndPoints, ClockDirection, TypeChains
-from src.models.operations import (
+from src.geometry.chain import Node, EndPoints, ClockDirection, TypeChains
+from src.geometry.geometry_utils import (
     copy_node,
     copy_chain,
     get_nodes_angles_from_list_nodes,
@@ -519,7 +519,7 @@ def add_chains_that_intersect_in_other_endpoint(
 
 
 def get_chains_that_satisfy_similarity_conditions(
-    state: Optional[SystemStatus],
+    state: Optional[ChainSystemManager],
     support_chain: Chain,
     src_chain: Chain,
     search_chain_set: List[Chain],
@@ -860,7 +860,7 @@ def split_and_connect_neighbouring_chains(
         )
         iteration[0] += 1
         counter_init = iteration[0]
-        state = SystemStatus(
+        state = ChainSystemManager(
             [ch_j],
             [ch_j.l_nodes],
             np.zeros((2, 2)),
@@ -1197,7 +1197,7 @@ def postprocessing(l_ch_c, l_nodes_c, debug, save_path, debug_img_pre):
     iteracion = [0]
 
     while True:
-        ctx = DiskContext(l_ch_p, idx_start, save_path=save_path, img=debug_img_pre)
+        ctx = ChainContext(l_ch_p, idx_start, save_path=save_path, img=debug_img_pre)
 
         while len(ctx.completed_chains) > 0:
             #  l_within_chains, inward_ring and outward_ring are attributes of ctx which are updated in next line

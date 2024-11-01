@@ -4,10 +4,10 @@ from typing import List, Optional, Tuple, Any
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.utils.drawing import Drawing
-from src.models.node import Node
-from src.models.curve import Curve
-from src.models.chain import Chain, TypeChains, EndPoints
+from src.visualization.drawing import Drawing
+from src.geometry.node import Node
+from src.geometry.curve import Curve
+from src.geometry.chain import Chain, TypeChains, EndPoints
 
 
 def euclidean_distance(pix1: np.array, pix2: np.array) -> float:

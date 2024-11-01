@@ -1,7 +1,7 @@
 from typing import List
 
-from src.models.chain import Chain
-from src.models.node import Node
+from src.geometry.chain import Chain
+from src.geometry.node import Node
 
 
 class ConnectParameters:

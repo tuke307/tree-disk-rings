@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
-from src.models.chain import Chain, EndPoints, ClockDirection
-from src.models.node import Node
+from src.geometry.chain import Chain, EndPoints, ClockDirection
+from src.geometry.node import Node
 from src.analysis.interpolation_nodes import (
     domain_interpolation,
     euclidean_distance_between_nodes,
@@ -9,7 +9,7 @@ from src.analysis.interpolation_nodes import (
 from typing import List
 
 
-class Neighbourhood:
+class ChainNeighbourhood:
     """
     Class to compute and store the total nodes of a chain and the candidate chains to connect to it.
 
@@ -25,7 +25,7 @@ class Neighbourhood:
         n_nodes: int = 20,
     ):
         """
-        Initializes a Neighbourhood instance.
+        Initializes a ChainNeighbourhood instance.
 
         Args:
             src_chain (Chain): Source chain to be connected.

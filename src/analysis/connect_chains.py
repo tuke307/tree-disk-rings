@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List, Tuple, Optional
 
-from src.models.operations import (
+from src.geometry.geometry_utils import (
     copy_chain,
     angular_distance_between_chains,
     visualize_selected_ch_and_chains_over_image_,
@@ -11,17 +11,17 @@ from src.models.operations import (
     get_chains_within_angle,
     get_closest_dots_to_angle_on_radial_direction_sorted_by_ascending_distance_to_center,
 )
-from src.models.node import Node
-from src.models.angular_set import Set
-from src.utils.system_status import SystemStatus
+from src.geometry.node import Node
+from src.geometry.angular_set import Set
+from src.analysis.chain_system_manager import ChainSystemManager
 from src.analysis.connect_parameters import ConnectParameters
-from src.models.chain import Chain, TypeChains, EndPoints, ChainLocation
-from src.models.node import Node
+from src.geometry.chain import Chain, TypeChains, EndPoints, ChainLocation
+from src.geometry.node import Node
 from src.analysis.interpolation_nodes import (
     compute_interpolation_domain,
     domain_interpolation,
 )
-from src.utils.virtual_band_info import similarity_conditions
+from src.analysis.chain_analysis_tools import similarity_conditions
 
 
 def extract_border_chain_from_list(
@@ -143,7 +143,7 @@ def update_pointer(
 
 
 def iterate_over_chains_list_and_complete_them_if_met_conditions(
-    state: SystemStatus,
+    state: ChainSystemManager,
 ) -> Tuple[List[Chain], List[Node], np.ndarray]:
     """
     Iterate over the list of chains and complete them if conditions are met.
@@ -161,7 +161,7 @@ def iterate_over_chains_list_and_complete_them_if_met_conditions(
 
 
 def debugging_chains(
-    state: SystemStatus, chains_to_debug: List[Chain], filename: str
+    state: ChainSystemManager, chains_to_debug: List[Chain], filename: str
 ) -> None:
     """
     Debug the chains by visualizing them.
@@ -223,7 +223,7 @@ def connect_chains_main_logic(
         Tuple[List[Chain], List[Node], np.ndarray]: Nodes and chain list after connecting.
     """
     # Initialization of the state object. It contains all the information needed to connect chains.
-    state = SystemStatus(
+    state = ChainSystemManager(
         l_ch_s,
         l_nodes_s,
         m,
@@ -347,7 +347,7 @@ def intersection_chains(
 
 
 def get_all_chain_in_subset_that_satisfy_condition(
-    state: SystemStatus,
+    state: ChainSystemManager,
     ch_j: Chain,
     ch_i: Chain,
     endpoint: int,
@@ -383,7 +383,7 @@ def get_all_chain_in_subset_that_satisfy_condition(
 
 
 def get_the_closest_chain_by_radial_distance_that_does_not_intersect(
-    state: SystemStatus,
+    state: ChainSystemManager,
     ch_j: Chain,
     ch_i: Chain,
     endpoint: int,
@@ -433,7 +433,7 @@ def get_the_closest_chain_by_radial_distance_that_does_not_intersect(
 
 
 def get_closest_chain(
-    state: SystemStatus,
+    state: ChainSystemManager,
     ch_j: Chain,
     l_no_intersection_j: List[Chain],
     ch_i: Chain,
@@ -498,7 +498,7 @@ def get_closest_chain(
 
 
 def get_closest_chain_logic(
-    state: SystemStatus,
+    state: ChainSystemManager,
     ch_j: Chain,
     l_candidates_chi: List[Chain],
     l_no_intersection_j: List[Chain],
@@ -565,7 +565,7 @@ def move_nodes_from_one_chain_to_another(ch_j: Chain, ch_k: Chain) -> bool:
 
 
 def generate_new_nodes(
-    state: SystemStatus, ch_j: Chain, ch_k: Chain, endpoint: int, ch_i: Chain
+    state: ChainSystemManager, ch_j: Chain, ch_k: Chain, endpoint: int, ch_i: Chain
 ) -> None:
     """
     Generate new nodes between chains.
@@ -590,7 +590,7 @@ def generate_new_nodes(
     return
 
 
-def updating_chain_nodes(state: SystemStatus, ch_j: Chain, ch_k: Chain) -> None:
+def updating_chain_nodes(state: ChainSystemManager, ch_j: Chain, ch_k: Chain) -> None:
     """
     Update chain nodes after moving nodes from one chain to another.
 
@@ -607,7 +607,7 @@ def updating_chain_nodes(state: SystemStatus, ch_j: Chain, ch_k: Chain) -> None:
 
 
 def delete_closest_chain(
-    state: SystemStatus, ch_k: Chain, l_candidates_chi: List[Chain]
+    state: ChainSystemManager, ch_k: Chain, l_candidates_chi: List[Chain]
 ) -> None:
     """
     Delete the closest chain from the system.
@@ -625,7 +625,9 @@ def delete_closest_chain(
     return
 
 
-def update_intersection_matrix(state: SystemStatus, ch_j: Chain, ch_k: Chain) -> None:
+def update_intersection_matrix(
+    state: ChainSystemManager, ch_j: Chain, ch_k: Chain
+) -> None:
     """
     Update the intersection matrix after deleting a chain.
 
@@ -645,7 +647,7 @@ def update_intersection_matrix(state: SystemStatus, ch_j: Chain, ch_k: Chain) ->
     return
 
 
-def update_chains_ids(state: SystemStatus, ch_k: Chain) -> None:
+def update_chains_ids(state: ChainSystemManager, ch_k: Chain) -> None:
     """
     Update chain IDs after deleting a chain.
 
@@ -662,7 +664,7 @@ def update_chains_ids(state: SystemStatus, ch_k: Chain) -> None:
 
 
 def connect_two_chains(
-    state: SystemStatus,
+    state: ChainSystemManager,
     ch_j: Chain,
     ch_k: Chain,
     l_candidates_chi: List[Chain],
@@ -1005,7 +1007,7 @@ def check_endpoints(
 
 
 def connectivity_goodness_condition(
-    state: SystemStatus,
+    state: ChainSystemManager,
     ch_j: Chain,
     candidate_chain: Chain,
     ch_i: Chain,
@@ -1050,7 +1052,7 @@ def connectivity_goodness_condition(
     return (check_pass, distribution_distance)
 
 
-def get_ids_chain_intersection(state: SystemStatus, chain_id: int) -> List[int]:
+def get_ids_chain_intersection(state: ChainSystemManager, chain_id: int) -> List[int]:
     """
     Get the IDs of chains that intersect with the given chain.
 
@@ -1156,7 +1158,9 @@ def get_dots_in_radial_direction(
     return dot_chain_index, nodes_over_ray
 
 
-def update_chain_after_connect(state: SystemStatus, ch_j: Chain, ch_k: Chain) -> int:
+def update_chain_after_connect(
+    state: ChainSystemManager, ch_j: Chain, ch_k: Chain
+) -> int:
     """
     Update the chain information after connecting two chains.
 

@@ -7,9 +7,9 @@ from pathlib import Path
 from typing import List, Any, Tuple, Dict
 import numpy as np
 
-from src.models.curve import Curve
-from src.models.chain import Chain, TypeChains
-from src.models.operations import visualize_chains_over_image
+from src.geometry.curve import Curve
+from src.geometry.chain import Chain, TypeChains
+from src.geometry.geometry_utils import visualize_chains_over_image
 from src.processing.preprocessing import resize
 
 
