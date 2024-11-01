@@ -3,7 +3,7 @@ from typing import List, Tuple, Optional
 
 from src.models.node import Node
 from src.models.chain import Chain, EndPoints
-from src.models.chain import (
+from src.models.operations import (
     euclidean_distance_between_nodes,
     get_closest_dots_to_angle_on_radial_direction_sorted_by_ascending_distance_to_center,
 )

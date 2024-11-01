@@ -8,12 +8,11 @@ from src.models.chain import (
     Chain,
     Node,
     TypeChains,
-    euclidean_distance,
-    get_node_from_list_by_angle,
 )
 from src.utils.drawing import Drawing
 from src.models.ray import Ray
 from src.models.curve import Curve
+from src.models.operations import euclidean_distance, get_node_from_list_by_angle
 
 
 def build_rays(nr: int, m: int, n: int, center: Tuple[float, float]) -> List[Ray]:

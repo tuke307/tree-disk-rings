@@ -17,11 +17,8 @@ from src.analysis.connect_chains import (
     intersection_between_chains,
     get_inward_and_outward_visible_chains,
 )
-from src.models.chain import (
-    Node,
-    EndPoints,
-    ClockDirection,
-    TypeChains,
+from src.models.chain import Node, EndPoints, ClockDirection, TypeChains
+from src.models.operations import (
     copy_node,
     copy_chain,
     get_nodes_angles_from_list_nodes,

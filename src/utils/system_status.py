@@ -2,7 +2,7 @@ import numpy as np
 from pathlib import Path
 from typing import List, Optional, Tuple
 
-from src.models.chain import (
+from src.models.operations import (
     copy_chain,
     euclidean_distance_between_nodes,
     get_chain_from_list_by_id,

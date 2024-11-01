@@ -4,7 +4,7 @@ import cv2
 
 from src.models.node import Node
 from src.models.chain import Chain, EndPoints, TypeChains
-from src.models.chain import euclidean_distance_between_nodes
+from src.models.operations import euclidean_distance_between_nodes
 from src.utils.drawing import Color, Drawing
 from src.analysis.interpolation_nodes import (
     generate_nodes_list_between_two_radial_distances,

@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List, Tuple, Optional
 
-from src.models.chain import (
+from src.models.operations import (
     copy_chain,
     angular_distance_between_chains,
     visualize_selected_ch_and_chains_over_image_,

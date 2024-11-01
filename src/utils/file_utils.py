@@ -8,7 +8,8 @@ from typing import List, Any, Tuple, Dict
 import numpy as np
 
 from src.models.curve import Curve
-from src.models.chain import visualize_chains_over_image, Chain, TypeChains
+from src.models.chain import Chain, TypeChains
+from src.models.operations import visualize_chains_over_image
 from src.processing.preprocessing import resize
 
 
