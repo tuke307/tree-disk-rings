@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/main.py",
             "args": [
                 "--input",
-                "./input/tree-disk4.png",
+                "./input/tree-disk1.jpg",
                 "--cx",
                 "538",
                 "--cy",
@@ -44,7 +44,7 @@
             "program": "${workspaceFolder}/main.py",
             "args": [
                 "--input",
-                "./input/tree-disk4.png",
+                "./input/tree-disk2.jpg",
                 "--cx",
                 "501",
                 "--cy",
