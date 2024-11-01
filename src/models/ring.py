@@ -44,7 +44,7 @@ class Ring:
         # Blue color in BGR
         color = (255, 0, 0)
 
-        # Line thickness of 2 px
+        # thickness of 2 px
         thickness = 1
 
         # Using cv2.polylines() method
