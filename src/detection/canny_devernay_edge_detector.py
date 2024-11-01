@@ -95,7 +95,7 @@ def execute_command(
     gx_path = results_path / "gx.txt"
     gy_path = results_path / "gy.txt"
     command = (
-        f"{str(root_path)}/devernay {image_path} -s {sigma} -l {low} -h {high} "
+        f"{str(root_path)}/devernay.out {image_path} -s {sigma} -l {low} -h {high} "
         f"-t {output_txt} -x {gx_path} -y {gy_path}"
     )
     os.system(command)
